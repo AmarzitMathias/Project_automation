@@ -46,7 +46,7 @@ subprocess.run("npm install argon2", shell=True)
 
 #Création du gitignore
 file = open(".gitignore", "w")
-file.write("node_modules/")
+file.write("node_modules/ \n .env")
 file.close()
 
 # Stcokage du fichier en dict afin de pouvoir le modifier
@@ -58,5 +58,11 @@ with open("package.json", "r") as file:
 with open("package.json", "w") as file:
   json.dump(data, file, indent=2)
 
-# file = open("package.json", "a")
-# file.write('\n "type": "module",\n')
+os.mkdir("public")
+os.mkdir("public/css")
+os.mkdir("public/image")
+os.mkdir("public/js")
+
+# Stcokage du fichier en dict afin de pouvoir le modifier
+with open(".env", "w") as file:
+  file.write("PORT=3000 \n PG_URL=postgres://user:password@localhost:5432/db")
