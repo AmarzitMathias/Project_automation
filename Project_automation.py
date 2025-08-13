@@ -1,5 +1,6 @@
 import os
 import subprocess
+import json
 
 print("Veuillez créer le dosssier de votre projet")
 path = input("Veuillez rentrer le chemin où vous souhaitez sauvegarder le projet (chemin absolu) ")
@@ -47,3 +48,15 @@ subprocess.run("npm install argon2", shell=True)
 file = open(".gitignore", "w")
 file.write("node_modules/")
 file.close()
+
+# Stcokage du fichier en dict afin de pouvoir le modifier
+with open("package.json", "r") as file:
+   data = json.load(file)
+   data["scripts"]["dev"] = "node --watch index.js"
+   data["type"] = "module"
+
+with open("package.json", "w") as file:
+  json.dump(data, file, indent=2)
+
+# file = open("package.json", "a")
+# file.write('\n "type": "module",\n')
