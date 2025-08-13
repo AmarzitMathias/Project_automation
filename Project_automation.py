@@ -1,4 +1,5 @@
 import os
+import subprocess
 
 print("Veuillez créer le dosssier de votre projet")
 path = input("Veuillez rentrer le chemin où vous souhaitez sauvegarder le projet (chemin absolu) ")
@@ -29,3 +30,20 @@ if not os.path.exists(full_path):
     print(f"Une erreur est survenue lors de la création du dossier : {error}")
 else:
   print(f"Le dossier {name} existe déjà à l'emplacement : {full_path}")
+
+#Changement de chemin actuel
+os.chdir(full_path)
+print(os.getcwd())
+
+#Installation dépendances
+subprocess.run("npm init -y", shell=True)
+subprocess.run("npm install dotenv", shell=True)
+subprocess.run("npm install ejs", shell=True)
+subprocess.run("npm install express", shell=True)
+subprocess.run("npm install pg", shell=True)
+subprocess.run("npm install argon2", shell=True)
+
+#Création du gitignore
+file = open(".gitignore", "w")
+file.write("node_modules/")
+file.close()
