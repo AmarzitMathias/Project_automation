@@ -7,7 +7,7 @@ from Methods import react
 
 
 def main():
-  type_project = input("Veuillez choisir le projet que vous souhaitez: EJS ou React (ViteJS)")
+  type_project = input("Veuillez choisir le projet que vous souhaitez: EJS ou React (ViteJS) : ")
   type_project = type_project.lower()
   print("Le projet choisi est :", type_project)
   print("Veuillez créer le dossier de votre projet")
