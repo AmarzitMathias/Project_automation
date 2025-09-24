@@ -24,12 +24,6 @@ def setup_react_project(name):
     # Installation des dépendances
     subprocess.run("pnpm install", shell=True)
 
-    # Modification du package.json (frontend)
-    with open("package.json", "r") as file:
-        data = json.load(file)
-        data["type"] = "module"
-    
-
     # Création des fichiers d'environnement
     with open(".env", "w", encoding="utf-8") as file:
         file.write("#VITE_API_URL=rentrez l'adresse de votre API \n")
@@ -39,6 +33,18 @@ def setup_react_project(name):
     # Ajouter .env au .gitignore
     with open(".gitignore", "a", encoding="utf-8") as file:
         file.write("\n # Ajout par l'automatisation\n.env\n")
+
+    # Modification du package.json (frontend)
+    with open("package.json", "r") as file:
+        data = json.load(file)
+        data["type"] = "module"
+        data["scripts"]["front"] = "vite"
+        data["scripts"]["install-front"] = "pnpm install"
+        data["scripts"]["install-back"] = "cd API && pnpm install"
+        data["scripts"]["back"] = "cd API && pnpm run dev"
+        data["scripts"]["build"] = "vite build"
+    with open("package.json", "w") as file:
+        json.dump(data, file, indent=2)
 
     # Création du dossier public et sous-dossiers
     Path("public").mkdir(exist_ok=True)
@@ -90,7 +96,7 @@ def setup_react_project(name):
         'router.get("/", (req, res) => {\n'
         '  res.send("Le router est bien fonctionnel !");\n'
         '});\n')
-        
+
     commun.environment()
 
     #Ecriture du sequelize-client.js
@@ -153,10 +159,8 @@ def setup_react_project(name):
      )
         
     os.chdir("..")  # Retour au dossier principal du projet
+
     # Ouverture du projet dans VSCode
     subprocess.run("code .", shell=True)
-
-    # Lancement du serveur de développement
-    subprocess.run("pnpm run dev", shell=True)
 
     exit()
