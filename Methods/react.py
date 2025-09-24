@@ -23,6 +23,8 @@ def setup_react_project(name):
 
     # Installation des dépendances
     subprocess.run("pnpm install", shell=True)
+    subprocess.run("pnpm install dotenv", shell=True)
+    subprocess.run("pnpm install react-router-dom", shell=True)
 
     # Création des fichiers d'environnement
     with open(".env", "w", encoding="utf-8") as file:
@@ -54,8 +56,43 @@ def setup_react_project(name):
     
     # Modification du dossier src
     (Path("src") / "components").mkdir(exist_ok=True)
+    (Path("src") / "components" / "test").mkdir(exist_ok=True)
     (Path("src") / "style").mkdir(exist_ok=True)
     (Path("src") / "@types").mkdir(exist_ok=True)
+
+    #Création d'un composant de test
+    with open("src/components/test/Test.tsx", "w", encoding="utf-8") as file:
+        file.write(
+            'import React from "react";\n'
+            '\n'
+            'interface TestProps {\n'
+            '  message: string;\n'
+            '}\n'
+            '\n'
+            'const Test: React.FC<TestProps> = ({ message }) => {\n'
+            '  return <div>{message}</div>;\n'
+            '};\n'
+            '\n'
+            'export default Test;\n'
+        )
+    
+    # Modification du main.tsx et ajout des routes
+    with open("src/main.tsx", "w", encoding="utf-8") as file:
+        file.write(
+    'import { BrowserRouter as Router, Route, Routes } from "react-router-dom";\n'
+    'import Test from "./components/test/Test";\n'
+    "import App from './App.tsx'\n"
+    "import { createRoot } from 'react-dom/client';\n"
+    "import './index.css'\n"
+    'createRoot(document.getElementById("root")!).render(\n'
+    '  <Router>\n'
+    '    <Routes>\n'
+    '      <Route path="/" element={<App />} />\n'
+    '      <Route path="/test" element={<Test message="Le composant Test fonctionne !" />} />\n'
+    '    </Routes>\n'
+    '  </Router>\n'
+    ');\n'
+)
     
     # Création API
     Path("API").mkdir(exist_ok=True)
