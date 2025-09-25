@@ -1,8 +1,10 @@
 import os
 import subprocess
 import json
+import sys
 
-import commun
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import commun  # Importation des fonctions communes
 
 def setup_ejs_project():
     #Installation dépendances
